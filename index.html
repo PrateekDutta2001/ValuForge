@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ValuForge</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="auth-container" id="loginPage">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">ValuForge</div>
+                <div class="auth-subtitle">Advanced GTN Optimization Platform</div>
+            </div>
+            <form class="auth-form" onsubmit="login(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="auth-button">Sign In</button>
+            </form>
+            <div class="auth-switch">
+                Don't have an account? <a href="#" onclick="showSignup()">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div class="auth-container hidden" id="signupPage">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">ValuForge</div>
+                <div class="auth-subtitle">Join the GTN Optimization Platform</div>
+            </div>
+            <form class="auth-form" onsubmit="signup(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Company</label>
+                    <input type="text" placeholder="Enter your company name" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select style="width: 100%; padding: 12px 16px; border: 2px solid #e8e8e8; border-radius: 8px; font-size: 14px;">
+                        <option>Select your role</option>
+                        <option>GTN Analyst</option>
+                        <option>Market Access Manager</option>
+                        <option>Pricing Manager</option>
+                        <option>Finance Manager</option>
+                        <option>Commercial Director</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="auth-button">Create Account</button>
+            </form>
+            <div class="auth-switch">
+                Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Container -->
+    <div class="container hidden" id="mainApp">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="logo">ValuForge</div>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="showPage('dashboard')">📊 Dashboard</li>
+                <li class="nav-item" onclick="showPage('gtn-optimization')">🎯 GTN Optimization</li>
+                <li class="nav-item" onclick="showPage('readiness-assessment')">📋 Readiness Assessment</li>
+                <li class="nav-item" onclick="showPage('contract-optimization')">📄 Contract Optimization</li>
+                <li class="nav-item" onclick="showPage('revenue-leakage')">💰 Revenue Leakage</li>
+                <li class="nav-item" onclick="showPage('data-management')">🗄️ Data Management</li>
+                <li class="nav-item" onclick="showPage('transformation-roadmap')">🗺️ Transformation Roadmap</li>
+                <li class="nav-item" onclick="showPage('devops-capabilities')">⚙️ DevOps Capabilities</li>
+                <li class="nav-item" onclick="showPage('impact-measurement')">📊 Impact Measurement</li>
+                <li class="nav-item" onclick="showPage('analytics')">📉 Advanced Analytics</li>
+                <li class="nav-item" onclick="showPage('reports')">📄 Reports</li>
+                <li class="nav-item" onclick="showPage('settings')">⚙️ Settings</li>
+            </ul>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="header-actions">
+                    <input type="text" class="search-box" placeholder="Search...">
+                    <button class="btn btn-primary">Help</button>
+                    <div style="position: relative;">
+                        <div class="profile-icon" onclick="toggleProfileDropdown()">JD</div>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="profile-dropdown-item">
+                                <span>👤</span>
+                                <span>John Doe</span>
+                            </div>
+                            <div class="profile-dropdown-item">
+                                <span>📧</span>
+                                <span>john.doe@pharma.com</span>
+                            </div>
+                            <div class="profile-dropdown-item">
+                                <span>🏢</span>
+                                <span>GTN Analyst</span>
+                            </div>
+                            <div class="profile-dropdown-item" onclick="showPage('settings')">
+                                <span>⚙️</span>
+                                <span>Settings</span>
+                            </div>
+                            <div class="profile-dropdown-item" onclick="logout()">
+                                <span>🚪</span>
+                                <span>Logout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboard">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Welcome to ValuForge - Gross to Net Pharmaceutical Tool</h2>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Total Revenue</div>
+                            <div class="metric-value">$2,543,000</div>
+                            <div class="metric-change">↑ 12.5% from last month</div>
+                        </div>
+                        <div class="metric-card success">
+                            <div class="metric-label">Net Revenue</div>
+                            <div class="metric-value">$1,895,450</div>
+                            <div class="metric-change">↑ 8.3% from last month</div>
+                        </div>
+                        <div class="metric-card warning">
+                            <div class="metric-label">Average Discount Rate</div>
+                            <div class="metric-value">25.4%</div>
+                            <div class="metric-change negative">↑ 2.1% from last month</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Revenue Growth Rate</div>
+                            <div class="metric-value">+8.9%</div>
+                            <div class="metric-change">Quarter-over-quarter</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">Recent GTN Calculations</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Customer</th>
+                                            <th>Gross Price</th>
+                                            <th>Discount %</th>
+                                            <th>Net Price</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Aspirin 500mg</td>
+                                            <td>City Pharmacy</td>
+                                            <td>$5,000</td>
+                                            <td>25%</td>
+                                            <td>$3,750</td>
+                                            <td>2025-10-15</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ibuprofen 200mg</td>
+                                            <td>MediCare Plus</td>
+                                            <td>$8,500</td>
+                                            <td>30%</td>
+                                            <td>$5,950</td>
+                                            <td>2025-10-14</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Metformin 850mg</td>
+                                            <td>Health Plus</td>
+                                            <td>$6,200</td>
+                                            <td>22%</td>
+                                            <td>$4,836</td>
+                                            <td>2025-10-13</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">View</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 16px;">
+                        <button class="btn btn-primary">New Calculation</button>
+                        <button class="btn btn-secondary">Generate Report</button>
+                    </div>
+                </div>
+
+                <!-- GTN Optimization Page -->
+                <div class="page" id="gtn-optimization">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">GTN Optimization - 5 Pillars Framework</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Integrated Approach to Unlocking More Value in Your GTN Strategy</div>
+                        <div class="card-body">
+                            <div class="pillar-card">
+                                <h4><i class="fas fa-target"></i> Pillar 1: Quality of Access Mindset</h4>
+                                <p>Orienting to a quality of access mindset for better top-line growth. Focus on understanding market dynamics, payer preferences, and access barriers to optimize pricing strategies.</p>
+                                <button class="btn btn-primary" style="margin-top: 10px;">Assess Quality of Access</button>
+                            </div>
+
+                            <div class="pillar-card">
+                                <h4><i class="fas fa-file-contract"></i> Pillar 2: Contract Optimization</h4>
+                                <p>Contract optimization for pre- and post-deal decision-making. Leverage advanced analytics to structure contracts that maximize value while minimizing risk.</p>
+                                <button class="btn btn-primary" style="margin-top: 10px;">Optimize Contracts</button>
+                            </div>
+
+                            <div class="pillar-card">
+                                <h4><i class="fas fa-cogs"></i> Pillar 3: GTN Operational Excellence</h4>
+                                <p>Streamline GTN processes and operations for maximum efficiency. Implement best practices, automation, and continuous improvement methodologies.</p>
+                                <button class="btn btn-primary" style="margin-top: 10px;">Improve Operations</button>
+                            </div>
+
+                            <div class="pillar-card">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Pillar 4: Revenue Leakage</h4>
+                                <p>Identify and mitigate revenue leakage through comprehensive monitoring, analytics, and proactive management of pricing and contracting processes.</p>
+                                <button class="btn btn-primary" style="margin-top: 10px;">Detect Revenue Leakage</button>
+                            </div>
+
+                            <div class="pillar-card">
+                                <h4><i class="fas fa-users"></i> Pillar 5: Commercial Resource Allocation</h4>
+                                <p>Optimize commercial resource allocation based on data-driven insights, market opportunities, and ROI analysis to maximize commercial effectiveness.</p>
+                                <button class="btn btn-primary" style="margin-top: 10px;">Optimize Resources</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="roi-calculator">
+                        <h4><i class="fas fa-calculator"></i> GTN Optimization ROI Calculator</h4>
+                        <div class="roi-inputs">
+                            <div class="form-group">
+                                <label>Current GTN Revenue ($M)</label>
+                                <input type="number" id="currentRevenue" value="100" onchange="calculateROI()">
+                            </div>
+                            <div class="form-group">
+                                <label>Optimization Impact (%)</label>
+                                <input type="number" id="optimizationImpact" value="15" onchange="calculateROI()">
+                            </div>
+                            <div class="form-group">
+                                <label>Implementation Cost ($M)</label>
+                                <input type="number" id="implementationCost" value="5" onchange="calculateROI()">
+                            </div>
+                            <div class="form-group">
+                                <label>Time Period (Years)</label>
+                                <input type="number" id="timePeriod" value="3" onchange="calculateROI()">
+                            </div>
+                        </div>
+                        <div class="roi-result">
+                            <h5>Projected ROI</h5>
+                            <div class="roi-value" id="roiValue">350%</div>
+                            <div style="color: #666; font-size: 14px; margin-top: 8px;">
+                                <div>Additional Revenue: $<span id="additionalRevenue">45M</span></div>
+                                <div>Net Benefit: $<span id="netBenefit">40M</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Readiness Assessment Page -->
+                <div class="page" id="readiness-assessment">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Readiness Assessment & Prioritized Roadmap</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Discovery and Readiness Assessment</div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Current GTN Maturity Level</label>
+                                    <select>
+                                        <option>Basic - Manual processes, limited analytics</option>
+                                        <option>Developing - Some automation, basic reporting</option>
+                                        <option>Advanced - Integrated systems, predictive analytics</option>
+                                        <option>Optimized - AI-driven, real-time optimization</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Data Quality Score</label>
+                                    <select>
+                                        <option>Poor (0-25%)</option>
+                                        <option>Fair (26-50%)</option>
+                                        <option>Good (51-75%)</option>
+                                        <option>Excellent (76-100%)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Technology Infrastructure</label>
+                                    <select>
+                                        <option>Legacy systems, limited integration</option>
+                                        <option>Modern systems, partial integration</option>
+                                        <option>Integrated platform, cloud-based</option>
+                                        <option>Advanced platform, AI-ready</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Team Capabilities</label>
+                                    <select>
+                                        <option>Limited GTN expertise</option>
+                                        <option>Basic GTN knowledge</option>
+                                        <option>Strong GTN expertise</option>
+                                        <option>Advanced GTN specialists</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Generate Assessment Report</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Prioritized Transformation Roadmap</div>
+                        <div class="card-body">
+                            <div class="transformation-roadmap">
+                                <div class="roadmap-phase">
+                                    <h5>Phase 1: Foundation (Months 1-6)</h5>
+                                    <p>Establish data governance, improve data quality, and implement basic automation</p>
+                                    <div class="phase-timeline">Timeline: 6 months | Investment: $2M | ROI: 150%</div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 2: Optimization (Months 7-12)</h5>
+                                    <p>Deploy advanced analytics, contract optimization tools, and revenue leakage detection</p>
+                                    <div class="phase-timeline">Timeline: 6 months | Investment: $3M | ROI: 250%</div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 3: Intelligence (Months 13-18)</h5>
+                                    <p>Implement AI/ML capabilities, predictive modeling, and real-time optimization</p>
+                                    <div class="phase-timeline">Timeline: 6 months | Investment: $4M | ROI: 400%</div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 4: Excellence (Months 19-24)</h5>
+                                    <p>Achieve full automation, continuous optimization, and market-leading performance</p>
+                                    <div class="phase-timeline">Timeline: 6 months | Investment: $3M | ROI: 500%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contract Optimization Page -->
+                <div class="page" id="contract-optimization">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Contract Optimization</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Pre-Deal Contract Analysis</div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Contract Type</label>
+                                    <select>
+                                        <option>Managed Care Agreement</option>
+                                        <option>Government Contract</option>
+                                        <option>International Agreement</option>
+                                        <option>Specialty Pharmacy Contract</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Product Portfolio</label>
+                                    <select>
+                                        <option>Select products...</option>
+                                        <option>Oncology Portfolio</option>
+                                        <option>Cardiovascular Portfolio</option>
+                                        <option>Neurology Portfolio</option>
+                                        <option>Rare Disease Portfolio</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Contract Value ($M)</label>
+                                    <input type="number" placeholder="Enter contract value">
+                                </div>
+                                <div class="form-group">
+                                    <label>Term Length (Years)</label>
+                                    <input type="number" placeholder="Enter contract term">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Analyze Contract</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Contract Optimization Results</div>
+                        <div class="card-body">
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <div class="metric-label">Optimized Contract Value</div>
+                                    <div class="metric-value">$125M</div>
+                                    <div class="metric-change">↑ 15% improvement</div>
+                                </div>
+                                <div class="metric-card success">
+                                    <div class="metric-label">Risk Mitigation</div>
+                                    <div class="metric-value">85%</div>
+                                    <div class="metric-change">↓ 25% risk reduction</div>
+                                </div>
+                                <div class="metric-card warning">
+                                    <div class="metric-label">Payment Terms</div>
+                                    <div class="metric-value">30 days</div>
+                                    <div class="metric-change">↓ 15 days faster</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Compliance Score</div>
+                                    <div class="metric-value">95%</div>
+                                    <div class="metric-change">↑ 10% improvement</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Leakage Page -->
+                <div class="page" id="revenue-leakage">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Revenue Leakage Detection & Mitigation</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Revenue Leakage Analysis</div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="revenueLeakageChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Identified Leakage Sources</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Leakage Source</th>
+                                            <th>Estimated Loss ($M)</th>
+                                            <th>Impact Level</th>
+                                            <th>Mitigation Priority</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Pricing Discrepancies</td>
+                                            <td>$2.5M</td>
+                                            <td><span style="color: #ff4d4f;">High</span></td>
+                                            <td><span style="color: #ff4d4f;">Critical</span></td>
+                                            <td><button class="btn btn-danger" style="padding: 4px 8px; font-size: 12px;">Fix Now</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Contract Non-compliance</td>
+                                            <td>$1.8M</td>
+                                            <td><span style="color: #faad14;">Medium</span></td>
+                                            <td><span style="color: #faad14;">High</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Investigate</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Data Entry Errors</td>
+                                            <td>$1.2M</td>
+                                            <td><span style="color: #faad14;">Medium</span></td>
+                                            <td><span style="color: #1890ff;">Medium</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Review</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Process Inefficiencies</td>
+                                            <td>$0.8M</td>
+                                            <td><span style="color: #52c41a;">Low</span></td>
+                                            <td><span style="color: #52c41a;">Low</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Plan</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Management Page -->
+                <div class="page" id="data-management">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Data Management & Integration</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Data Sources & Connections</div>
+                        <div class="card-body">
+                            <div class="data-upload-area" onclick="document.getElementById('fileInput').click()">
+                                <div class="upload-icon">📁</div>
+                                <div class="upload-text">Drop Excel files here or click to browse</div>
+                                <div class="upload-subtext">Supports .xlsx, .csv, .json formats</div>
+                            </div>
+                            <input type="file" id="fileInput" style="display: none;" multiple accept=".xlsx,.csv,.json">
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Connected Data Sources</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Data Source</th>
+                                            <th>Type</th>
+                                            <th>Last Updated</th>
+                                            <th>Records</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Sales Transaction Data</td>
+                                            <td>Database</td>
+                                            <td>2025-10-16 17:30</td>
+                                            <td>125,450</td>
+                                            <td><span style="color: #52c41a;">● Connected</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Sync</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Contract Database</td>
+                                            <td>Database</td>
+                                            <td>2025-10-16 16:45</td>
+                                            <td>2,340</td>
+                                            <td><span style="color: #52c41a;">● Connected</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Sync</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pricing Master Data</td>
+                                            <td>Excel Upload</td>
+                                            <td>2025-10-16 15:20</td>
+                                            <td>15,670</td>
+                                            <td><span style="color: #faad14;">● Pending</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Process</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Market Access Data</td>
+                                            <td>API</td>
+                                            <td>2025-10-16 14:15</td>
+                                            <td>8,920</td>
+                                            <td><span style="color: #52c41a;">● Connected</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Refresh</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div class="page" id="analytics">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Analytics</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Revenue Trend Analysis</div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="revenueAnalysisChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Customer Segmentation</div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="customerSegmentationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Product Performance</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Units Sold</th>
+                                            <th>Revenue</th>
+                                            <th>Avg Discount %</th>
+                                            <th>Growth %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Aspirin 500mg</td>
+                                            <td>45,320</td>
+                                            <td>$226,600</td>
+                                            <td>24%</td>
+                                            <td>15.2%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ibuprofen 200mg</td>
+                                            <td>38,450</td>
+                                            <td>$192,250</td>
+                                            <td>28%</td>
+                                            <td>12.8%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Metformin 850mg</td>
+                                            <td>52,100</td>
+                                            <td>$260,500</td>
+                                            <td>22%</td>
+                                            <td>18.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amoxicillin 250mg</td>
+                                            <td>29,875</td>
+                                            <td>$149,375</td>
+                                            <td>26%</td>
+                                            <td>9.3%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Revenue Forecasting</div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="forecastingChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Page -->
+                <div class="page" id="reports">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Reports</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Generate Report</div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Report Type</label>
+                                    <select>
+                                        <option>Select Report Type...</option>
+                                        <option>GTN Summary Report</option>
+                                        <option>Revenue Analysis Report</option>
+                                        <option>Customer Performance Report</option>
+                                        <option>Product Sales Report</option>
+                                        <option>Discount Analysis Report</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Date Range</label>
+                                    <input type="date">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>To Date</label>
+                                    <input type="date">
+                                </div>
+                                <div class="form-group">
+                                    <label>Export Format</label>
+                                    <select>
+                                        <option>Excel (.xlsx)</option>
+                                        <option>CSV (.csv)</option>
+                                        <option>JSON (.json)</option>
+                                        <option>PDF (.pdf)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 16px;">
+                                <button class="btn btn-primary">Generate Report</button>
+                                <button class="btn btn-secondary">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Report History</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Report Name</th>
+                                            <th>Type</th>
+                                            <th>Generated Date</th>
+                                            <th>Format</th>
+                                            <th>Size</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>GTN Summary Report - Oct 2025</td>
+                                            <td>GTN Summary</td>
+                                            <td>2025-10-15 14:32</td>
+                                            <td>Excel</td>
+                                            <td>2.4 MB</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Download</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Revenue Analysis - Q3 2025</td>
+                                            <td>Revenue Analysis</td>
+                                            <td>2025-10-14 09:15</td>
+                                            <td>PDF</td>
+                                            <td>5.1 MB</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Download</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Customer Performance Report</td>
+                                            <td>Customer</td>
+                                            <td>2025-10-13 16:45</td>
+                                            <td>CSV</td>
+                                            <td>1.8 MB</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Download</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Scheduled Reports</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Report Name</th>
+                                            <th>Frequency</th>
+                                            <th>Next Run</th>
+                                            <th>Recipients</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Weekly Revenue Report</td>
+                                            <td>Weekly (Mon)</td>
+                                            <td>2025-10-20</td>
+                                            <td>3 recipients</td>
+                                            <td><span style="color: #52c41a;">●</span> Active</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Edit</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Monthly GTN Report</td>
+                                            <td>Monthly (1st)</td>
+                                            <td>2025-11-01</td>
+                                            <td>5 recipients</td>
+                                            <td><span style="color: #52c41a;">●</span> Active</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Edit</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-primary" style="margin-top: 16px;">Create Scheduled Report</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page" id="settings">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Settings</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">User Profile</div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" value="John Doe">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" value="john.doe@pharma.com">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    <input type="text" value="Sales & Pricing">
+                                </div>
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <input type="text" value="GTN Analyst" disabled>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary">Update Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Application Settings</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" checked> Enable Email Notifications
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" checked> Enable Dark Mode
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox"> Show Advanced Options
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Default Currency</label>
+                                <select>
+                                    <option>USD ($)</option>
+                                    <option>EUR (€)</option>
+                                    <option>GBP (£)</option>
+                                    <option>INR (₹)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Time Zone</label>
+                                <select>
+                                    <option>UTC</option>
+                                    <option>EST</option>
+                                    <option>CST</option>
+                                    <option>IST (India)</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Database Connections</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Connection Name</th>
+                                            <th>Type</th>
+                                            <th>Host</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Primary Database</td>
+                                            <td>PostgreSQL</td>
+                                            <td>db.pharma.local</td>
+                                            <td><span style="color: #52c41a;">● Connected</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Edit</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Analytics DB</td>
+                                            <td>MongoDB</td>
+                                            <td>analytics.pharma.local</td>
+                                            <td><span style="color: #52c41a;">● Connected</span></td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Edit</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-primary" style="margin-top: 16px;">Add Connection</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Danger Zone</div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 16px; color: #ff4d4f;">Irreversible and destructive actions</p>
+                            <div style="display: flex; gap: 16px;">
+                                <button class="btn btn-secondary">Export Data</button>
+                                <button class="btn btn-danger">Reset Application</button>
+                                <button class="btn btn-danger">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transformation Roadmap Page -->
+                <div class="page" id="transformation-roadmap">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Business Transformation Roadmap</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Programmatic Approach to Business Transformation</div>
+                        <div class="card-body">
+                            <div class="transformation-roadmap">
+                                <div class="roadmap-phase">
+                                    <h5>Phase 1: Executive Sponsorship & Vision</h5>
+                                    <p>Establish executive sponsorship and define clear vision for GTN optimization across market access functions</p>
+                                    <div class="phase-timeline">Timeline: 2 months | Focus: Leadership alignment</div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 2: Cross-Functional Team Formation</h5>
+                                    <p>Create transformation team with representatives from finance, brand, market access, and digital teams</p>
+                                    <div class="phase-timeline">Timeline: 1 month | Focus: Team building</div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 3: Data & Technology Foundation</h5>
+                                    <p>Modernize infrastructure, integrate data platforms, and build foundational data products</p>
+                                    <div class="phase-timeline">Timeline: 6 months | Focus: Infrastructure</div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 4: Capability Ecosystem</h5>
+                                    <p>Deploy self-service BI tools, analytics workbenches, and decision support software</p>
+                                    <div class="phase-timeline">Timeline: 4 months | Focus: Capabilities</div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 5: Continuous Value Delivery</h5>
+                                    <p>Implement agile methodology for continuous alignment and frequent value delivery</p>
+                                    <div class="phase-timeline">Timeline: Ongoing | Focus: Optimization</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Governance Structure</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Role</th>
+                                            <th>Responsibility</th>
+                                            <th>Key Stakeholders</th>
+                                            <th>Frequency</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Executive Sponsor</td>
+                                            <td>Strategic oversight, resource allocation</td>
+                                            <td>CEO, CCO, CFO</td>
+                                            <td>Monthly</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Transformation Lead</td>
+                                            <td>Program management, execution</td>
+                                            <td>VP Market Access, Digital Lead</td>
+                                            <td>Weekly</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Business Champions</td>
+                                            <td>Requirements, user adoption</td>
+                                            <td>Brand Managers, Finance</td>
+                                            <td>Bi-weekly</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Technical Team</td>
+                                            <td>Implementation, maintenance</td>
+                                            <td>IT, Data Science, Analytics</td>
+                                            <td>Daily</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DevOps Capabilities Page -->
+                <div class="page" id="devops-capabilities">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">DevOps Capabilities & Infrastructure</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Modern Infrastructure & Data Platform Integration</div>
+                        <div class="card-body">
+                            <div class="devops-capabilities">
+                                <div class="capability-card">
+                                    <div class="capability-icon">🏗️</div>
+                                    <h5>Infrastructure Modernization</h5>
+                                    <p>Cloud-native architecture with auto-scaling, containerization, and microservices</p>
+                                </div>
+                                <div class="capability-card">
+                                    <div class="capability-icon">🔗</div>
+                                    <h5>Data Platform Integration</h5>
+                                    <p>Unified data lake with real-time processing, ETL/ELT pipelines, and data quality management</p>
+                                </div>
+                                <div class="capability-card">
+                                    <div class="capability-icon">📊</div>
+                                    <h5>Self-Service BI</h5>
+                                    <p>Interactive dashboards, drag-and-drop analytics, and automated report generation</p>
+                                </div>
+                                <div class="capability-card">
+                                    <div class="capability-icon">🧠</div>
+                                    <h5>Analytics Workbench</h5>
+                                    <p>ML/AI development environment with model deployment and monitoring capabilities</p>
+                                </div>
+                                <div class="capability-card">
+                                    <div class="capability-icon">⚡</div>
+                                    <h5>Real-Time Processing</h5>
+                                    <p>Stream processing for real-time GTN calculations and instant decision support</p>
+                                </div>
+                                <div class="capability-card">
+                                    <div class="capability-icon">🔒</div>
+                                    <h5>Security & Compliance</h5>
+                                    <p>End-to-end encryption, role-based access control, and regulatory compliance</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Continuous Integration & Deployment</div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Deployment Environment</label>
+                                    <select>
+                                        <option>Development</option>
+                                        <option>Staging</option>
+                                        <option>Production</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Release Type</label>
+                                    <select>
+                                        <option>Feature Release</option>
+                                        <option>Bug Fix</option>
+                                        <option>Hot Fix</option>
+                                        <option>Major Version</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Release Notes</label>
+                                <textarea placeholder="Describe the changes in this release..."></textarea>
+                            </div>
+                            <button class="btn btn-primary">Deploy to Production</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Measurement Page -->
+                <div class="page" id="impact-measurement">
+                    <h2 style="margin-bottom: 20px; font-size: 24px;">Impact Measurement & Change Management</h2>
+                    
+                    <div class="card">
+                        <div class="card-header">Leading & Lagging Indicators</div>
+                        <div class="card-body">
+                            <div class="impact-metrics">
+                                <div class="impact-metric efficiency">
+                                    <h6>Bid Turn-around Time</h6>
+                                    <div class="metric-value">2.3 days</div>
+                                    <div style="color: #1890ff; font-size: 12px;">↓ 40% faster</div>
+                                </div>
+                                <div class="impact-metric efficiency">
+                                    <h6>Process Efficiency</h6>
+                                    <div class="metric-value">85%</div>
+                                    <div style="color: #1890ff; font-size: 12px;">↑ 25% improvement</div>
+                                </div>
+                                <div class="impact-metric effectiveness">
+                                    <h6>GTN Accuracy</h6>
+                                    <div class="metric-value">98.7%</div>
+                                    <div style="color: #52c41a; font-size: 12px;">↑ 5% improvement</div>
+                                </div>
+                                <div class="impact-metric effectiveness">
+                                    <h6>Forecast Accuracy</h6>
+                                    <div class="metric-value">94.2%</div>
+                                    <div style="color: #52c41a; font-size: 12px;">↑ 8% improvement</div>
+                                </div>
+                                <div class="impact-metric">
+                                    <h6>Revenue Recouped</h6>
+                                    <div class="metric-value">$12.5M</div>
+                                    <div style="color: #52c41a; font-size: 12px;">↑ 15% increase</div>
+                                </div>
+                                <div class="impact-metric">
+                                    <h6>Leakage Mitigated</h6>
+                                    <div class="metric-value">$8.3M</div>
+                                    <div style="color: #52c41a; font-size: 12px;">↑ 22% reduction</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Change Management Plan</div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>User Adoption Rate</label>
+                                    <input type="number" value="87" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Training Completion</label>
+                                    <input type="number" value="94" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>User Satisfaction Score</label>
+                                    <input type="number" value="4.6" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Support Ticket Volume</label>
+                                    <input type="number" value="23" readonly>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Generate Change Management Report</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 24px;">
+                        <div class="card-header">Innovation & Continuous Development</div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Innovation Area</th>
+                                            <th>Development Status</th>
+                                            <th>User Feedback</th>
+                                            <th>Next Milestone</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>AI-Powered Contract Analysis</td>
+                                            <td><span style="color: #52c41a;">● In Development</span></td>
+                                            <td>4.8/5.0</td>
+                                            <td>Q1 2026</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Review</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Real-time Market Intelligence</td>
+                                            <td><span style="color: #faad14;">● Planning</span></td>
+                                            <td>4.5/5.0</td>
+                                            <td>Q2 2026</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Plan</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Predictive Revenue Modeling</td>
+                                            <td><span style="color: #1890ff;">● Testing</span></td>
+                                            <td>4.7/5.0</td>
+                                            <td>Q4 2025</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Test</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile GTN Calculator</td>
+                                            <td><span style="color: #52c41a;">● Deployed</span></td>
+                                            <td>4.9/5.0</td>
+                                            <td>Ongoing</td>
+                                            <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Monitor</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>&copy; 2025 ValuForge. All rights reserved. | Version 1.0.0 | <a href="#" style="color: #1890ff; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: #1890ff; text-decoration: none;">Terms of Service</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
